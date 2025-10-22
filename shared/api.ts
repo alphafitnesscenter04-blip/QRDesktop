@@ -10,3 +10,20 @@
 export interface DemoResponse {
   message: string;
 }
+
+export interface ScanItem {
+  id?: string;
+  content: string;
+  meta?: Record<string, any> | null;
+  created_at?: string;
+}
+
+export interface ListScansResponse {
+  items: ScanItem[];
+}
+
+export interface CreateScanResponse {
+  saved: boolean;
+  item: ScanItem;
+  message?: string;
+}
