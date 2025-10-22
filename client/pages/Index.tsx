@@ -34,11 +34,12 @@ export default function Index() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content, meta: { userAgent: navigator.userAgent } }),
       });
-      const data = (await res.json()) as CreateScanResponse;
-      setLast(data.item.content);
-      setScans((prev) => [data.item, ...prev].slice(0, 20));
-      if (data.saved) toast.success("Saved to Supabase");
-      else toast.message(data.message ?? "Captured", { description: "Data not persisted" });
+      const data = (await res.json()) as Partial<CreateScanResponse> | any;
+      const item: ScanItem = data?.item ?? { content, meta: { fallback: true }, created_at: new Date().toISOString() };
+      setLast(item.content);
+      setScans((prev) => [item, ...prev].slice(0, 20));
+      if (data?.saved) toast.success("Saved to Supabase");
+      else toast.message(data?.message ?? "Captured", { description: "Data not persisted" });
     } catch (err: any) {
       toast.error("Failed to save scan", { description: err?.message });
       setLast(content);
