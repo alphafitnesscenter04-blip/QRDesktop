@@ -10,6 +10,9 @@ export default function Index() {
   const [scans, setScans] = useState<ScanItem[]>([]);
   const [last, setLast] = useState<string>("");
   const [manual, setManual] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [keycard, setKeycard] = useState<KeycardItem | null>(null);
+  const [notFoundId, setNotFoundId] = useState<string | null>(null);
 
   useEffect(() => {
     void loadScans();
