@@ -61,13 +61,13 @@ export default function Scanner({ onDetected }: ScannerProps) {
     <div className="w-full">
       <div className="relative overflow-hidden rounded-xl border bg-card">
         <div className="absolute left-3 top-3 z-10">
-          <Select value={deviceId ?? ""} onValueChange={(v) => setDeviceId(v)}>
+          <Select value={deviceId ?? undefined} onValueChange={(v) => setDeviceId(v)} disabled={devices.length === 0}>
             <SelectTrigger className="w-56 bg-background/80 backdrop-blur">
-              <SelectValue placeholder="Select camera" />
+              <SelectValue placeholder={devices.length ? "Select camera" : "No cameras"} />
             </SelectTrigger>
             <SelectContent>
               {devices.length === 0 ? (
-                <SelectItem value="" disabled>No cameras</SelectItem>
+                <SelectItem value="no-cameras" disabled>No cameras</SelectItem>
               ) : (
                 devices.map((d, i) => (
                   <SelectItem key={d.deviceId || i} value={d.deviceId}>
