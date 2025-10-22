@@ -27,3 +27,24 @@ export interface CreateScanResponse {
   item: ScanItem;
   message?: string;
 }
+
+export interface KeycardItem {
+  idx?: number | null;
+  id: string;
+  user_id?: string | null;
+  unique_id: string;
+  status?: string | null;
+  qr_code_url?: string | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+  type?: string | null;
+  expires_at?: string | null;
+  is_vip?: boolean | null;
+  [key: string]: any;
+}
+
+export interface KeycardLookupResponse {
+  found: boolean;
+  item?: KeycardItem;
+  error?: string;
+}
