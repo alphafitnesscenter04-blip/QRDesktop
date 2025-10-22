@@ -3,7 +3,7 @@ import Scanner from "@/components/qr/Scanner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ListScansResponse, CreateScanResponse, ScanItem } from "@shared/api";
+import { ListScansResponse, CreateScanResponse, ScanItem, KeycardLookupResponse, KeycardItem } from "@shared/api";
 import { toast } from "sonner";
 
 export default function Index() {
