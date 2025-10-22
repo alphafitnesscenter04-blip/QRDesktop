@@ -68,7 +68,7 @@ export default function Index() {
             <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-teal-500"></div>
             <span className="text-xl font-bold">Alpha Fitness QR</span>
           </div>
-          <div className="text-sm text-muted-foreground">Supabase: {import.meta.env.NEXT_PUBLIC_SUPABASE_URL ? "connected" : "not set"}</div>
+          <div className="text-sm text-muted-foreground">Desktop QR Scanner</div>
         </div>
       </header>
 
