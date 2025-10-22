@@ -81,6 +81,8 @@ export default function Index() {
 
   const handleDetected = async (text: string) => {
     await persistScan(text);
+    const id = extractUniqueId(text);
+    if (id) await verifyKeycard(id);
   };
 
   const lastPreview = useMemo(() => {
