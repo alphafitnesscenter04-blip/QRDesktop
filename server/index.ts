@@ -20,5 +20,9 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // QR Scans API
+  app.get("/api/scans", listScans);
+  app.post("/api/scans", createScan);
+
   return app;
 }
