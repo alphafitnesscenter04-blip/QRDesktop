@@ -30,6 +30,35 @@ export default function Index() {
     }
   };
 
+  const extractUniqueId = (raw: string): string | null => {
+    if (!raw) return null;
+    try {
+      const u = new URL(raw);
+      const parts = u.pathname.split("/").filter(Boolean);
+      const last = parts[parts.length - 1];
+      if (last && /key-[a-z0-9]+/i.test(last)) return last.toUpperCase();
+    } catch {}
+    const m = raw.match(/KEY-[A-Z0-9]+/i);
+    if (m) return m[0].toUpperCase();
+    return raw.startsWith("KEY-") ? raw.toUpperCase() : null;
+  };
+
+  const verifyKeycard = async (candidate: string) => {
+    setVerifying(true);
+    setKeycard(null);
+    setNotFoundId(null);
+    try {
+      const res = await fetch(`/api/keycards/${encodeURIComponent(candidate)}`);
+      const data = (await res.json()) as KeycardLookupResponse;
+      if (data.found && data.item) setKeycard(data.item);
+      else setNotFoundId(candidate);
+    } catch (e) {
+      setNotFoundId(candidate);
+    } finally {
+      setVerifying(false);
+    }
+  };
+
   const persistScan = async (content: string) => {
     try {
       const res = await fetch("/api/scans", {
