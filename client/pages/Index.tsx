@@ -18,10 +18,12 @@ export default function Index() {
   const loadScans = async () => {
     try {
       const res = await fetch("/api/scans");
-      const data = (await res.json()) as ListScansResponse;
-      setScans(data.items);
+      const data = (await res.json()) as Partial<ListScansResponse> | any;
+      const items = Array.isArray(data?.items) ? data.items : [];
+      setScans(items);
     } catch (err) {
       console.error(err);
+      setScans([]);
     }
   };
 
