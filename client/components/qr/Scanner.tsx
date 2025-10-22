@@ -1,4 +1,4 @@
-import { QrScanner } from "@yudiel/react-qr-scanner";
+import { Scanner as QrScanner } from "@yudiel/react-qr-scanner";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -12,35 +12,44 @@ export default function Scanner({ onDetected }: ScannerProps) {
   const [error, setError] = useState<string | null>(null);
   const lastValueRef = useRef<string>("");
 
-  const constraints = useMemo(() => ({
+  const constraints = useMemo<MediaTrackConstraints>(() => ({
     facingMode,
-    // prefer HD for desktop webcams
     width: { ideal: 1280 },
     height: { ideal: 720 },
   }), [facingMode]);
 
-  const handleDecode = useCallback((result: string) => {
-    if (!result || result === lastValueRef.current) return;
-    lastValueRef.current = result;
-    onDetected(result);
+  const handleScan = useCallback((result: any) => {
+    let value: string | null = null;
+    if (!result) return;
+    if (Array.isArray(result)) {
+      // prefer rawValue if available
+      const first = result[0];
+      value = (first?.rawValue ?? first?.content ?? String(first ?? "")).toString();
+    } else if (typeof result === "string") {
+      value = result;
+    } else if (typeof result?.rawValue === "string") {
+      value = result.rawValue;
+    } else if (typeof result?.content === "string") {
+      value = result.content;
+    }
+    if (!value || value === lastValueRef.current) return;
+    lastValueRef.current = value;
+    onDetected(value);
   }, [onDetected]);
 
   return (
     <div className="w-full">
       <div className="relative overflow-hidden rounded-xl border bg-card">
-        {enabled ? (
-          <QrScanner
-            onDecode={handleDecode}
-            onError={(e) => setError(e?.message ?? "Camera error")}
-            constraints={{ video: constraints }}
-            scanDelay={300}
-            // fancier styles
-            containerStyle={{ width: "100%" }}
-            videoStyle={{ objectFit: "cover", width: "100%", aspectRatio: "16/9" }}
-            viewFinder
-          />
-        ) : (
-          <div className="aspect-video grid place-items-center text-muted-foreground">
+        <QrScanner
+          onScan={handleScan}
+          onError={(e: any) => setError(e?.message ?? "Camera error")}
+          constraints={constraints}
+          scanDelay={300}
+          paused={!enabled}
+          styles={{ container: { width: "100%" }, video: { objectFit: "cover", width: "100%", aspectRatio: "16/9" } } as any}
+        />
+        {!enabled && (
+          <div className="absolute inset-0 grid place-items-center bg-background/60 text-muted-foreground">
             Camera paused
           </div>
         )}
