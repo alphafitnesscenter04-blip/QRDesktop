@@ -25,5 +25,8 @@ export function createServer() {
   app.get("/api/scans", listScans);
   app.post("/api/scans", createScan);
 
+  // Keycards lookup
+  app.get("/api/keycards/:unique_id", getKeycardByUniqueId);
+
   return app;
 }
