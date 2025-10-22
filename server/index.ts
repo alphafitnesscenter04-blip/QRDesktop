@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createScan, listScans } from "./routes/scans";
+import { getKeycardByUniqueId } from "./routes/keycards";
 
 export function createServer() {
   const app = express();
