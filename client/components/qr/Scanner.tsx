@@ -42,7 +42,10 @@ export default function Scanner({ onDetected }: ScannerProps) {
       <div className="relative overflow-hidden rounded-xl border bg-card">
         <QrScanner
           onScan={handleScan}
-          onError={(e: any) => setError(e?.message ?? "Camera error")}
+          onError={(e: any) => {
+            const msg = e?.name === "NotAllowedError" ? "Camera permission denied. Please allow access and reload." : (e?.message ?? "Camera error");
+            setError(msg);
+          }}
           constraints={constraints}
           scanDelay={300}
           paused={!enabled}
