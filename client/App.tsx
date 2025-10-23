@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Verify from "./pages/Verify";
 import AppLayout from "./components/layouts/AppLayout";
 
 const queryClient = new QueryClient();
