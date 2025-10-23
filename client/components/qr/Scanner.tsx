@@ -61,22 +61,23 @@ export default function Scanner({ onDetected }: ScannerProps) {
     <div className="w-full">
       <div className="relative overflow-hidden rounded-xl border bg-card">
         <div className="absolute left-3 top-3 z-10">
-          <Select value={deviceId ?? undefined} onValueChange={(v) => setDeviceId(v)} disabled={devices.length === 0}>
-            <SelectTrigger className="w-56 bg-background/80 backdrop-blur">
-              <SelectValue placeholder={devices.length ? "Select camera" : "No cameras"} />
-            </SelectTrigger>
-            <SelectContent>
-              {devices.length === 0 ? (
-                <SelectItem value="no-cameras" disabled>No cameras</SelectItem>
-              ) : (
-                devices.map((d, i) => (
-                  <SelectItem key={d.deviceId || i} value={d.deviceId}>
+          {devices.length > 0 && (
+            <Select value={deviceId ?? devices[0]?.deviceId ?? ""} onValueChange={(v) => setDeviceId(v)}>
+              <SelectTrigger className="w-56 bg-background/80 backdrop-blur">
+                <SelectValue placeholder="Select camera" />
+              </SelectTrigger>
+              <SelectContent>
+                {devices.map((d, i) => (
+                  <SelectItem key={d.deviceId || i} value={d.deviceId || ""}>
                     {d.label || `Camera ${i + 1}`}
                   </SelectItem>
-                ))
-              )}
-            </SelectContent>
-          </Select>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          {devices.length === 0 && (
+            <div className="text-sm text-muted-foreground">No cameras found</div>
+          )}
         </div>
 
         <QrScanner
