@@ -124,7 +124,7 @@ export default function Index() {
               {verifying && <div className="mt-1 text-base">Checking...</div>}
               {!verifying && keycard && (
                 <div className="mt-2 space-y-2">
-                  <div className="text-base font-medium">{keycard.unique_id}</div>
+                  <a href={`/verify/${encodeURIComponent(keycard.unique_id)}`} className="text-base font-medium text-primary hover:underline">{keycard.unique_id}</a>
                   <div className="text-sm text-muted-foreground">Status: {keycard.status ?? "unknown"} {keycard.is_vip ? "• VIP" : ""}</div>
                   <div className="text-sm">Type: {keycard.type ?? "n/a"}</div>
                   <div className="text-xs text-muted-foreground">Created: {keycard.created_at ? new Date(keycard.created_at).toLocaleString() : ""}</div>
