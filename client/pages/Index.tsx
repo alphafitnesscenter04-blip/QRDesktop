@@ -1,9 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import Scanner from "@/components/qr/Scanner";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ListScansResponse, CreateScanResponse, ScanItem, KeycardLookupResponse, KeycardItem } from "@shared/api";
+import {
+  ListScansResponse,
+  CreateScanResponse,
+  ScanItem,
+  KeycardLookupResponse,
+  KeycardItem,
+} from "@shared/api";
 import { toast } from "sonner";
 
 export default function Index() {
@@ -64,18 +76,35 @@ export default function Index() {
       const res = await fetch("/api/scans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content, meta: { userAgent: navigator.userAgent } }),
+        body: JSON.stringify({
+          content,
+          meta: { userAgent: navigator.userAgent },
+        }),
       });
       const data = (await res.json()) as Partial<CreateScanResponse> | any;
-      const item: ScanItem = data?.item ?? { content, meta: { fallback: true }, created_at: new Date().toISOString() };
+      const item: ScanItem = data?.item ?? {
+        content,
+        meta: { fallback: true },
+        created_at: new Date().toISOString(),
+      };
       setLast(item.content);
       setScans((prev) => [item, ...prev].slice(0, 20));
       if (data?.saved) toast.success("Saved to Supabase");
-      else toast.message(data?.message ?? "Captured", { description: "Data not persisted" });
+      else
+        toast.message(data?.message ?? "Captured", {
+          description: "Data not persisted",
+        });
     } catch (err: any) {
       toast.error("Failed to save scan", { description: err?.message });
       setLast(content);
-      setScans((prev) => [{ content, meta: { ephemeral: true }, created_at: new Date().toISOString() }, ...prev]);
+      setScans((prev) => [
+        {
+          content,
+          meta: { ephemeral: true },
+          created_at: new Date().toISOString(),
+        },
+        ...prev,
+      ]);
     }
   };
 
@@ -90,7 +119,14 @@ export default function Index() {
     try {
       const url = new URL(last);
       return (
-        <a href={url.toString()} target="_blank" rel="noreferrer" className="text-primary underline break-all">{url.toString()}</a>
+        <a
+          href={url.toString()}
+          target="_blank"
+          rel="noreferrer"
+          className="text-primary underline break-all"
+        >
+          {url.toString()}
+        </a>
       );
     } catch {
       return <span className="break-all">{last}</span>;
@@ -103,14 +139,43 @@ export default function Index() {
         <Card>
           <CardHeader>
             <CardTitle>Scan a QR code</CardTitle>
-            <CardDescription>Use your webcam to scan. Works great on desktop webcams.</CardDescription>
+            <CardDescription>
+              Use your webcam to scan. Works great on desktop webcams.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Scanner onDetected={handleDetected} />
             <div className="flex items-center gap-2">
-              <Input placeholder="Or paste QR content here" value={manual} onChange={(e) => setManual(e.target.value)} />
-              <Button onClick={() => { if (manual.trim()) { persistScan(manual.trim()); const id = extractUniqueId(manual.trim()); if (id) verifyKeycard(id); } }}>Add</Button>
-              <Button variant="secondary" onClick={async () => { try { const t = await navigator.clipboard.readText(); setManual(t); toast.success("Pasted from clipboard"); } catch { toast.error("Clipboard read failed"); } }}>Paste</Button>
+              <Input
+                placeholder="Or paste QR content here"
+                value={manual}
+                onChange={(e) => setManual(e.target.value)}
+              />
+              <Button
+                onClick={() => {
+                  if (manual.trim()) {
+                    persistScan(manual.trim());
+                    const id = extractUniqueId(manual.trim());
+                    if (id) verifyKeycard(id);
+                  }
+                }}
+              >
+                Add
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={async () => {
+                  try {
+                    const t = await navigator.clipboard.readText();
+                    setManual(t);
+                    toast.success("Pasted from clipboard");
+                  } catch {
+                    toast.error("Clipboard read failed");
+                  }
+                }}
+              >
+                Paste
+              </Button>
             </div>
             {last && (
               <div className="rounded-lg border bg-muted/30 p-4">
@@ -124,14 +189,29 @@ export default function Index() {
               {verifying && <div className="mt-1 text-base">Checking...</div>}
               {!verifying && keycard && (
                 <div className="mt-2 space-y-2">
-                  <a href={`/verify/${encodeURIComponent(keycard.unique_id)}`} className="text-base font-medium text-primary hover:underline">{keycard.unique_id}</a>
-                  <div className="text-sm text-muted-foreground">Status: {keycard.status ?? "unknown"} {keycard.is_vip ? "• VIP" : ""}</div>
+                  <a
+                    href={`/verify/${encodeURIComponent(keycard.unique_id)}`}
+                    className="text-base font-medium text-primary hover:underline"
+                  >
+                    {keycard.unique_id}
+                  </a>
+                  <div className="text-sm text-muted-foreground">
+                    Status: {keycard.status ?? "unknown"}{" "}
+                    {keycard.is_vip ? "• VIP" : ""}
+                  </div>
                   <div className="text-sm">Type: {keycard.type ?? "n/a"}</div>
-                  <div className="text-xs text-muted-foreground">Created: {keycard.created_at ? new Date(keycard.created_at).toLocaleString() : ""}</div>
+                  <div className="text-xs text-muted-foreground">
+                    Created:{" "}
+                    {keycard.created_at
+                      ? new Date(keycard.created_at).toLocaleString()
+                      : ""}
+                  </div>
                 </div>
               )}
               {!verifying && !keycard && notFoundId && (
-                <div className="mt-2 text-sm text-destructive">No keycard found for {notFoundId}</div>
+                <div className="mt-2 text-sm text-destructive">
+                  No keycard found for {notFoundId}
+                </div>
               )}
             </div>
           </CardContent>
@@ -146,14 +226,36 @@ export default function Index() {
           </CardHeader>
           <CardContent>
             {scans.length === 0 ? (
-              <p className="text-muted-foreground">No scans yet. Try scanning a code.</p>
+              <p className="text-muted-foreground">
+                No scans yet. Try scanning a code.
+              </p>
             ) : (
               <ul className="divide-y">
                 {scans.map((s, i) => (
                   <li key={(s.id ?? "tmp") + i} className="py-3">
-                    <div className="text-sm text-muted-foreground">{s.created_at ? new Date(s.created_at).toLocaleString() : ""}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {s.created_at
+                        ? new Date(s.created_at).toLocaleString()
+                        : ""}
+                    </div>
                     <div className="mt-1 text-base break-all">
-                      {(() => { try { const u = new URL(s.content); return <a href={u.toString()} target="_blank" rel="noreferrer" className="text-primary underline">{u.toString()}</a>; } catch { return s.content; } })()}
+                      {(() => {
+                        try {
+                          const u = new URL(s.content);
+                          return (
+                            <a
+                              href={u.toString()}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-primary underline"
+                            >
+                              {u.toString()}
+                            </a>
+                          );
+                        } catch {
+                          return s.content;
+                        }
+                      })()}
                     </div>
                   </li>
                 ))}

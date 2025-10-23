@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { KeycardLookupResponse, KeycardItem } from "@shared/api";
 import { Badge } from "@/components/ui/badge";
 
@@ -50,43 +56,64 @@ export default function Verify() {
             <div className="space-y-4">
               <div>
                 <div className="text-sm text-muted-foreground">Unique ID</div>
-                <div className="text-2xl font-bold font-mono">{keycard.unique_id}</div>
+                <div className="text-2xl font-bold font-mono">
+                  {keycard.unique_id}
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="text-sm text-muted-foreground">Status</div>
-                  <Badge className="mt-1" variant={keycard.status === "active" ? "default" : "secondary"}>
+                  <Badge
+                    className="mt-1"
+                    variant={
+                      keycard.status === "active" ? "default" : "secondary"
+                    }
+                  >
                     {keycard.status ?? "unknown"}
                   </Badge>
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Type</div>
-                  <div className="text-base font-medium">{keycard.type ?? "n/a"}</div>
+                  <div className="text-base font-medium">
+                    {keycard.type ?? "n/a"}
+                  </div>
                 </div>
               </div>
 
               {keycard.is_vip && (
                 <div className="rounded-lg bg-amber-100/20 border border-amber-300/30 p-3">
-                  <div className="text-sm font-medium text-amber-900 dark:text-amber-100">✨ VIP Keycard</div>
+                  <div className="text-sm font-medium text-amber-900 dark:text-amber-100">
+                    ✨ VIP Keycard
+                  </div>
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="text-sm text-muted-foreground">Created</div>
-                  <div className="text-sm">{keycard.created_at ? new Date(keycard.created_at).toLocaleString() : "N/A"}</div>
+                  <div className="text-sm">
+                    {keycard.created_at
+                      ? new Date(keycard.created_at).toLocaleString()
+                      : "N/A"}
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Updated</div>
-                  <div className="text-sm">{keycard.updated_at ? new Date(keycard.updated_at).toLocaleString() : "N/A"}</div>
+                  <div className="text-sm">
+                    {keycard.updated_at
+                      ? new Date(keycard.updated_at).toLocaleString()
+                      : "N/A"}
+                  </div>
                 </div>
               </div>
 
               {keycard.expires_at && (
                 <div>
                   <div className="text-sm text-muted-foreground">Expires</div>
-                  <div className="text-sm">{new Date(keycard.expires_at).toLocaleString()}</div>
+                  <div className="text-sm">
+                    {new Date(keycard.expires_at).toLocaleString()}
+                  </div>
                 </div>
               )}
 
