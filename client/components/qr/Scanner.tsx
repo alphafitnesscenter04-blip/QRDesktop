@@ -39,7 +39,8 @@ export default function Scanner({ onDetected }: ScannerProps) {
         const list = await navigator.mediaDevices.enumerateDevices();
         const vids = list.filter((d) => d.kind === "videoinput");
         setDevices(vids);
-        if (!deviceId && vids.length) setDeviceId(vids[0].deviceId);
+        // Only set deviceId on first load
+        setDeviceId((prev) => prev || (vids.length ? vids[0].deviceId : null));
       } catch (e) {
         // ignore
       }
@@ -48,7 +49,7 @@ export default function Scanner({ onDetected }: ScannerProps) {
     navigator.mediaDevices?.addEventListener?.("devicechange", load);
     return () =>
       navigator.mediaDevices?.removeEventListener?.("devicechange", load);
-  }, [deviceId]);
+  }, []);
 
   const handleScan = useCallback(
     (result: any) => {
