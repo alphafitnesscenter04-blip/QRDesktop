@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Scanner from "@/components/qr/Scanner";
+import KeycardVerification from "@/components/qr/KeycardVerification";
 import { Button } from "@/components/ui/button";
 import {
   Card,
