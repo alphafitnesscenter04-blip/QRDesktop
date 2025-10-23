@@ -109,7 +109,7 @@ export default function Index() {
             <Scanner onDetected={handleDetected} />
             <div className="flex items-center gap-2">
               <Input placeholder="Or paste QR content here" value={manual} onChange={(e) => setManual(e.target.value)} />
-              <Button onClick={() => manual.trim() && persistScan(manual.trim())}>Add</Button>
+              <Button onClick={() => { if (manual.trim()) { persistScan(manual.trim()); const id = extractUniqueId(manual.trim()); if (id) verifyKeycard(id); } }}>Add</Button>
               <Button variant="secondary" onClick={async () => { try { const t = await navigator.clipboard.readText(); setManual(t); toast.success("Pasted from clipboard"); } catch { toast.error("Clipboard read failed"); } }}>Paste</Button>
             </div>
             {last && (
