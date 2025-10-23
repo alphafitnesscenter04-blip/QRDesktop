@@ -185,36 +185,11 @@ export default function Index() {
               </div>
             )}
 
-            <div className="rounded-lg border p-4">
-              <div className="text-sm text-muted-foreground">Verification</div>
-              {verifying && <div className="mt-1 text-base">Checking...</div>}
-              {!verifying && keycard && (
-                <div className="mt-2 space-y-2">
-                  <a
-                    href={`/verify/${encodeURIComponent(keycard.unique_id)}`}
-                    className="text-base font-medium text-primary hover:underline"
-                  >
-                    {keycard.unique_id}
-                  </a>
-                  <div className="text-sm text-muted-foreground">
-                    Status: {keycard.status ?? "unknown"}{" "}
-                    {keycard.is_vip ? "• VIP" : ""}
-                  </div>
-                  <div className="text-sm">Type: {keycard.type ?? "n/a"}</div>
-                  <div className="text-xs text-muted-foreground">
-                    Created:{" "}
-                    {keycard.created_at
-                      ? new Date(keycard.created_at).toLocaleString()
-                      : ""}
-                  </div>
-                </div>
-              )}
-              {!verifying && !keycard && notFoundId && (
-                <div className="mt-2 text-sm text-destructive">
-                  No keycard found for {notFoundId}
-                </div>
-              )}
-            </div>
+            <KeycardVerification
+              verifying={verifying}
+              keycard={keycard}
+              notFoundId={notFoundId}
+            />
           </CardContent>
         </Card>
       </section>
