@@ -80,26 +80,25 @@ export default function Scanner({ onDetected }: ScannerProps) {
     <div className="w-full">
       <div className="relative overflow-hidden rounded-xl border bg-card">
         <div className="absolute left-3 top-3 z-10">
-          {devices.length > 0 && (
-            <Select
-              value={deviceId ?? devices[0]?.deviceId ?? ""}
-              onValueChange={(v) => setDeviceId(v)}
-            >
+          {devices.length > 0 && deviceId && (
+            <Select value={deviceId} onValueChange={(v) => setDeviceId(v)}>
               <SelectTrigger className="w-56 bg-background/80 backdrop-blur">
                 <SelectValue placeholder="Select camera" />
               </SelectTrigger>
               <SelectContent>
-                {devices.map((d, i) => (
-                  <SelectItem key={d.deviceId || i} value={d.deviceId || ""}>
-                    {d.label || `Camera ${i + 1}`}
-                  </SelectItem>
-                ))}
+                {devices
+                  .filter((d) => d.deviceId)
+                  .map((d, i) => (
+                    <SelectItem key={d.deviceId} value={d.deviceId}>
+                      {d.label || `Camera ${i + 1}`}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           )}
-          {devices.length === 0 && (
+          {(devices.length === 0 || !deviceId) && (
             <div className="text-sm text-muted-foreground">
-              No cameras found
+              {devices.length === 0 ? "No cameras" : "Loading..."}
             </div>
           )}
         </div>
