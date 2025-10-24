@@ -29,5 +29,8 @@ export function createServer() {
   // Keycards lookup
   app.get("/api/keycards/:unique_id", getKeycardByUniqueId);
 
+  // Attendance monitoring
+  app.get("/api/attendance", listAttendance);
+
   return app;
 }
