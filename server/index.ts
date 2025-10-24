@@ -4,6 +4,7 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createScan, listScans } from "./routes/scans";
 import { getKeycardByUniqueId } from "./routes/keycards";
+import { listAttendance } from "./routes/attendance";
 
 export function createServer() {
   const app = express();
