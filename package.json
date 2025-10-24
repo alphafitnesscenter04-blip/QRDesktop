@@ -1,7 +1,10 @@
 {
-  "name": "fusion-starter",
+  "name": "alpha-fitness-qr",
+  "version": "1.0.0",
+  "description": "Alpha Fitness QR Code Scanner & Attendance Management System",
   "private": true,
   "type": "module",
+  "main": "main.cjs",
   "pkg": {
     "assets": [
       "dist/spa/*"
