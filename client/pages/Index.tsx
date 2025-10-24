@@ -203,40 +203,20 @@ export default function Index() {
           </CardHeader>
           <CardContent>
             {scans.length === 0 ? (
-              <p className="text-muted-foreground">
-                No scans yet. Try scanning a code.
-              </p>
+              <div className="rounded-lg border border-dashed bg-muted/30 p-6 text-center">
+                <p className="text-sm text-muted-foreground">
+                  No scans yet. Try scanning a QR code or add one manually.
+                </p>
+              </div>
             ) : (
-              <ul className="divide-y">
-                {scans.map((s, i) => (
-                  <li key={(s.id ?? "tmp") + i} className="py-3">
-                    <div className="text-sm text-muted-foreground">
-                      {s.created_at
-                        ? new Date(s.created_at).toLocaleString()
-                        : ""}
-                    </div>
-                    <div className="mt-1 text-base break-all">
-                      {(() => {
-                        try {
-                          const u = new URL(s.content);
-                          return (
-                            <a
-                              href={u.toString()}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-primary underline"
-                            >
-                              {u.toString()}
-                            </a>
-                          );
-                        } catch {
-                          return s.content;
-                        }
-                      })()}
-                    </div>
-                  </li>
+              <div className="space-y-2">
+                {scans.map((s) => (
+                  <ScanItemCard
+                    key={(s.id ?? "") + (s.created_at ?? "")}
+                    scan={s}
+                  />
                 ))}
-              </ul>
+              </div>
             )}
           </CardContent>
         </Card>
