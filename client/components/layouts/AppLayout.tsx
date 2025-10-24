@@ -18,7 +18,9 @@ export default function AppLayout({ children }: PropsWithChildren<{}>) {
               </div>
               <div>
                 <div className="text-lg font-bold">Alpha Fitness</div>
-                <div className="text-xs text-muted-foreground">QR Management System</div>
+                <div className="text-xs text-muted-foreground">
+                  QR Management System
+                </div>
               </div>
             </div>
           </div>
@@ -53,7 +55,8 @@ export default function AppLayout({ children }: PropsWithChildren<{}>) {
       <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
 
       <footer className="border-t py-6 text-center text-sm text-muted-foreground bg-background/50">
-        © {new Date().getFullYear()} Alpha Fitness QR Management System • Desktop v1.0
+        © {new Date().getFullYear()} Alpha Fitness QR Management System •
+        Desktop v1.0
       </footer>
     </div>
   );

@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -73,9 +79,10 @@ export default function Attendance() {
   };
 
   const filteredRecords = useMemo(() => {
-    return records.filter((r) =>
-      r.key_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      r.member_name.toLowerCase().includes(searchTerm.toLowerCase())
+    return records.filter(
+      (r) =>
+        r.key_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.member_name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [records, searchTerm]);
 
@@ -98,9 +105,12 @@ export default function Attendance() {
   }, [todayRecords]);
 
   const getStatusBadge = (status: string) => {
-    if (status === "active") return <Badge className="bg-green-100 text-green-900">Active</Badge>;
-    if (status === "pending") return <Badge className="bg-amber-100 text-amber-900">Pending</Badge>;
-    if (status === "inactive") return <Badge className="bg-red-100 text-red-900">Inactive</Badge>;
+    if (status === "active")
+      return <Badge className="bg-green-100 text-green-900">Active</Badge>;
+    if (status === "pending")
+      return <Badge className="bg-amber-100 text-amber-900">Pending</Badge>;
+    if (status === "inactive")
+      return <Badge className="bg-red-100 text-red-900">Inactive</Badge>;
     return <Badge className="bg-gray-100 text-gray-900">Unknown</Badge>;
   };
 
@@ -126,8 +136,12 @@ export default function Attendance() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-600">{stats.active}</div>
-            <p className="text-xs text-muted-foreground mt-1">Currently active</p>
+            <div className="text-3xl font-bold text-green-600">
+              {stats.active}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Currently active
+            </p>
           </CardContent>
         </Card>
 
@@ -153,7 +167,10 @@ export default function Attendance() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-4">
-            <Tabs value={dateFilter} onValueChange={(v: any) => setDateFilter(v)}>
+            <Tabs
+              value={dateFilter}
+              onValueChange={(v: any) => setDateFilter(v)}
+            >
               <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
                 <TabsList className="grid w-full sm:w-auto grid-cols-2">
                   <TabsTrigger value="today">Today</TabsTrigger>
@@ -202,13 +219,20 @@ export default function Attendance() {
                       </thead>
                       <tbody>
                         {todayRecords.map((record) => (
-                          <tr key={record.id} className="border-b hover:bg-accent/50 transition">
+                          <tr
+                            key={record.id}
+                            className="border-b hover:bg-accent/50 transition"
+                          >
                             <td className="py-3 px-4 text-xs">
                               {new Date(record.timestamp).toLocaleTimeString()}
                             </td>
                             <td className="py-3 px-4">{record.member_name}</td>
-                            <td className="py-3 px-4 font-mono text-sm">{record.key_code}</td>
-                            <td className="py-3 px-4">{getStatusBadge(record.status)}</td>
+                            <td className="py-3 px-4 font-mono text-sm">
+                              {record.key_code}
+                            </td>
+                            <td className="py-3 px-4">
+                              {getStatusBadge(record.status)}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -231,14 +255,18 @@ export default function Attendance() {
                         className="flex items-center justify-between p-4 rounded-lg border hover:bg-accent/30 transition"
                       >
                         <div className="space-y-1 flex-1">
-                          <div className="font-medium">{record.member_name}</div>
+                          <div className="font-medium">
+                            {record.member_name}
+                          </div>
                           <div className="text-xs text-muted-foreground flex items-center gap-2">
                             <Clock className="h-3 w-3" />
                             {new Date(record.timestamp).toLocaleString()}
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="text-sm font-mono text-right">{record.key_code}</div>
+                          <div className="text-sm font-mono text-right">
+                            {record.key_code}
+                          </div>
                           {getStatusBadge(record.status)}
                         </div>
                       </div>
@@ -249,7 +277,11 @@ export default function Attendance() {
             </Tabs>
           </div>
 
-          {loading && <div className="text-center py-4 text-muted-foreground">Loading...</div>}
+          {loading && (
+            <div className="text-center py-4 text-muted-foreground">
+              Loading...
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

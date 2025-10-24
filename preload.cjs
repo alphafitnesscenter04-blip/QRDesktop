@@ -1,5 +1,5 @@
-const { contextBridge, ipcMain } = require('electron');
+const { contextBridge, ipcMain } = require("electron");
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  ping: () => ipcMain.invoke('ping'),
+contextBridge.exposeInMainWorld("electronAPI", {
+  ping: () => ipcMain.invoke("ping"),
 });

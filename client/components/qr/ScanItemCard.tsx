@@ -78,7 +78,9 @@ export default function ScanItemCard({ scan }: ScanItemCardProps) {
               <ExternalLink className="h-3 w-3 opacity-60 group-hover:opacity-100 transition-opacity" />
             </a>
           ) : (
-            <div className="text-sm break-all text-foreground">{scan.content}</div>
+            <div className="text-sm break-all text-foreground">
+              {scan.content}
+            </div>
           )}
         </div>
         <button
@@ -86,7 +88,9 @@ export default function ScanItemCard({ scan }: ScanItemCardProps) {
           className="flex-shrink-0 p-1.5 rounded hover:bg-background/80 transition-colors text-muted-foreground hover:text-foreground"
           title="Copy content"
         >
-          <Copy className={`h-4 w-4 transition-colors ${copied ? "text-green-500" : ""}`} />
+          <Copy
+            className={`h-4 w-4 transition-colors ${copied ? "text-green-500" : ""}`}
+          />
         </button>
       </div>
     </div>
