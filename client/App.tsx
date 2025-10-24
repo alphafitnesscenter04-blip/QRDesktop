@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Verify from "./pages/Verify";
+import Attendance from "./pages/Attendance";
 import AppLayout from "./components/layouts/AppLayout";
 
 const queryClient = new QueryClient();
