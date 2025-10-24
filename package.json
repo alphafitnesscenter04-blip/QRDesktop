@@ -57,6 +57,7 @@
     "start": "npm run build && npm run start:electron",
     "start:electron": "electron .",
     "start:web": "node dist/server/node-build.mjs",
+    "desktop": "npm run dev:electron",
     "electron": "electron .",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
